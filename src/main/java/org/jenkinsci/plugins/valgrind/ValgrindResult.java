@@ -25,26 +25,30 @@ public class ValgrindResult implements Serializable
 	private static final long serialVersionUID = -5347879997716170059L;
 	private static final String PID_TOKEN = "pid=";
 
-    private ValgrindParserResult parser;
-    private transient Run<?, ?> owner;
-    private Map<String, String> sourceFiles;
+	private ValgrindParserResult parser;
+	private transient Run<?, ?> owner;
+	private Map<String, String> sourceFiles;
 
-    public ValgrindResult( Run<?, ?> build, ValgrindParserResult parser)
-    {
-    	this.owner = build;
-        this.parser = parser;
-    }
+	public ValgrindResult( Run<?, ?> build, ValgrindParserResult parser)
+	{
+		this.owner = build;
+		this.parser = parser;
+	}
 
 	public Run<?, ?> getOwner()
 	{
 		return owner;
 	}
 
+	public void setOwner(Run<?,?> owner) {
+		this.owner = owner;
+	}
+
 	public ValgrindPublisherConfig getConfig()
 	{
 		ValgrindBuildAction action = owner.getAction(ValgrindBuildAction.class);
-    	if ( action == null )
-    		return null;
+		if ( action == null )
+			return null;
 
 		return action.getConfig();
 	}
@@ -57,8 +61,8 @@ public class ValgrindResult implements Serializable
 	public ValgrindReport getReport() throws IOException, InterruptedException
 	{
 
-        FilePath file = new FilePath(owner.getRootDir());
-        return file.act(parser);
+		FilePath file = new FilePath(owner.getRootDir());
+		return file.act(parser);
 	}
 
 	public Map<String, String> getSourceFiles()

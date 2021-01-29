@@ -31,7 +31,7 @@ public class ValgrindBuildAction extends AbstractValgrindBuildAction implements 
 	private ValgrindPublisherConfig config;
 
 	public ValgrindBuildAction(Run<?, ?> owner, ValgrindResult result,
-			ValgrindPublisherConfig config)
+							   ValgrindPublisherConfig config)
 	{
 		super(owner);
 		this.result = result;
@@ -145,7 +145,14 @@ public class ValgrindBuildAction extends AbstractValgrindBuildAction implements 
 	@Override
 	public Collection<? extends Action> getProjectActions() {
 		List<ValgrindProjectAction> projectActions = new ArrayList<>();
- 		projectActions.add(new ValgrindProjectAction(owner.getParent()));
+		projectActions.add(new ValgrindProjectAction(owner.getParent()));
 		return projectActions;
+	}
+
+	@Override
+	public void setOwner(Run<?, ?> owner) {
+		super.setOwner(owner);
+
+		result.setOwner(owner);
 	}
 }
